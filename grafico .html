@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<style>
+    body {
+        margin: 0;
+        background-color: rgb(75, 117, 255);
+        position: relative;
+    }
+
+    .container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -10%);
+        background-color: rgb(255, 255, 255);
+        width: 80%;
+        height: 1050px;
+        border-radius: 2%;
+        box-shadow: rgba(74, 74, 74, 0.568) 0px 22px 70px 4px;
+    }
+
+    h1 {
+        color: #2980f2;
+        margin-top: 5%;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+
+    button {
+        background-color: #06172d;
+        border: none;
+        color: white;
+        padding: 5px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin-left: 485px;
+        margin-top: 50px
+    }
+
+    .card {
+        border: 3px solid  #0a2c58;
+        margin: 5px;
+        color:  #0a2c58;
+        margin-top: 15%;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        text-align: justify ;
+    }
+</style>
+<body>
+
+<img src="fundo1.jpg" style="opacity: 0.5; width: 100vmax; height: 320px;">
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div style="text-align: center;">
+                <h1>Temperatura ºC°/Umidade</h1>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Função/O que é</h5>
+                                <p class="card-text">   O sensor DHT11 é um sensor digital de umidade e temperatura, que
+                                    utiliza um único pino de dados para transmitir informações para a placa Arduino. Ele
+                                    mede a umidade relativa do ar de 20% a 90% com uma precisão de +/-5% e a temperatura
+                                    ambiente de 0°C a 50°C com uma precisão de +/-2°C.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Importância</h5>
+                                <p class="card-text">   Sua importância reside em sua capacidade de fornecer informações
+                                    cruciais para uma variedade de aplicações, como monitoramento ambiental, automação 
+                                    residencial, controle de umidade em armazenamento, prevenção de danos, controle de qualidade industrial e muito mais. Ele é amplamente utilizado devido 
+                                    à sua facilidade de integração e acesso a dados importantes sobre o ambiente.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <canvas id="lineChart" width="900" height="340" style="margin-top: 15%;"></canvas>
+        </div>
+    </div>
+    <button>
+        <a href="Era2D-2.html">VOLTAR À PÁGINA INICIAL 🤖</a>
+    </button>
+</div>
+
+<script>
+    const ctx = document.getElementById('lineChart').getContext('2d');
+    const lineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [],  // Para os rótulos do eixo X
+            datasets: [{
+                label: 'Nível de CO2 (ppm)',
+                data: [],   // Dados do nível de CO2
+                borderColor: '#2980f2',
+                backgroundColor: '#9fc6f9',
+                fill: true,
+            }],
+        },
+        options: {
+            // Suas opções de gráfico aqui
+        }
+    });
+
+    const socket = new WebSocket('ws://seu-servidor-websocket');
+    socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        // Atualize os dados do gráfico com os dados recebidos
+        lineChart.data.labels.push(new Date().toLocaleTimeString());
+        lineChart.data.datasets[0].data.push(data.value);
+        lineChart.update();
+    };
+</script>
+</body>
+</html>

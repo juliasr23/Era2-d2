@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico de Linhas com Dados</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<style>
+    body {
+        margin: 0;
+        background-color: rgb(75, 117, 255);
+        position: relative;
+    }
+    
+    .container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -10%);
+        background-color: rgb(255, 255, 255);
+        width: 80%;
+        height: auto;
+        padding: 20px; /* Adicionei um espaçamento interno ao container */
+        border-radius: 2%;
+        box-shadow: rgba(74, 74, 74, 0.568) 0px 22px 70px 4px;
+    }
+    
+    h1 {
+        color: #0a2c58;
+        text-align: center; /* Centralizei o título */
+    }
+    
+    button {
+        background-color: #06172d;
+        border: none;
+        color: white;
+        padding: 5px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        display: block; /* Alterei para "block" para melhorar o posicionamento */
+        margin: 20px auto; /* Centralizei o botão */
+    }
+    
+    /* Adicionei um estilo para o card */
+    .card {
+        border: 3px solid #0a2c58;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 20px 0;
+        text-align: justify;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        color: #0a2c58;
+    }
+    h5{
+        text-align: center;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        font-size: 14px;
+    }
+</style>
+<body>
+    <img src="fundo1.jpg" style="opacity: 0.5; width: 100vmax; height: 320px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h1>CO2</h1>
+                <div class="card">
+                    <h5 class="card-title">Mudança nas emissões globais de CO2 por combustível, em relação aos níveis de 2019, 2015-2022</h5>
+                    <p class="card-text"> As Emissões de CO2 em 2022 fornecem uma imagem completa das emissões de gases com efeito de estufa relacionadas com a energia em 2022. O relatório conclui que o crescimento global das emissões não foi tão elevado como alguns temiam inicialmente no meio das perturbações causadas pela crise energética global. Este último lançamento reúne a análise mais recente da AIE, combinando as estimativas da Agência sobre as emissões de CO2 de todas as fontes de energia e processos industriais, bem como fornecendo informações sobre as emissões de metano e óxido nitroso relacionadas com a energia.
+
+                    Este relatório faz parte do apoio da AIE ao primeiro balanço global do Acordo de Paris, que será finalizado no período que antecede a COP28, a próxima Conferência das Nações Unidas sobre Alterações Climáticas, no final de 2023. Encontre outros relatórios nesta série sobre o Página Global Energy Transitions Stocktake da IEA.</p>
+                </div>
+                <canvas id="lineChart" width="800" height="240" style="margin-top: 15%;"></canvas>
+                <p>Grafico retirado do IEA (International Energy Agency)</p>
+                <button>
+                    <a href="Era2D-2.html">VOLTAR À PÁGINA INICIAL🤖</a>
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Seus dados
+        var labels = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"];
+        var coalData = [-0.15, -0.37, -0.15, 0.25, 0, -0.53, 0.46, 0.70];
+        var oilData = [-0.26, -0.20, -0.05, 0.03, 0, -1.26, -0.48, -0.21];
+        var gasData = [-0.78, -0.60, -0.45, -0.13, 0, -0.12, 0.25, 0.13];
+
+        var ctx = document.getElementById("lineChart").getContext("2d");
+
+        // Crie o gráfico de linha
+        var myChart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: "Carvão  ",
+                        data: coalData,
+                        borderColor: "rgba(255, 99, 132, 1)",
+                        fill: false
+                    },
+                    {
+                        label: "Óleo ",
+                        data: oilData,
+                        borderColor: "rgba(54, 162, 235, 1)",
+                        fill: false
+                    },
+                    {
+                        label: "Gás natural",
+                        data: gasData,
+                        borderColor: "rgba(75, 192, 192, 1)",
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: "Ano"
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: "Gt CO2"
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
